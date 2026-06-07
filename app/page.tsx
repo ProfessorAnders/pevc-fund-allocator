@@ -584,19 +584,8 @@ function MyFundTab(props: MyFundTabProps) {
   const inputCls =
     'w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm placeholder:text-slate-600 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/50 transition-colors';
 
-  const FilePicker = ({ label }: { label: string }) => (
-    <div>
-      <label className="block text-slate-400 text-sm mb-1.5">{label}</label>
-      <input
-        ref={fileInputRef}
-        type="file"
-        accept="application/pdf"
-        onChange={e => setFundFile(e.target.files?.[0] ?? null)}
-        className="block w-full text-sm text-slate-400 file:mr-3 file:rounded-lg file:border-0 file:bg-slate-700 file:px-3 file:py-2 file:text-white file:text-sm file:font-medium hover:file:bg-slate-600 file:cursor-pointer"
-      />
-      {fundFile && <p className="text-slate-500 text-xs mt-1.5 truncate">Selected: {fundFile.name}</p>}
-    </div>
-  );
+  const fileInputCls =
+    'block w-full text-sm text-slate-400 file:mr-3 file:rounded-lg file:border-0 file:bg-slate-700 file:px-3 file:py-2 file:text-white file:text-sm file:font-medium hover:file:bg-slate-600 file:cursor-pointer';
 
   // No fund yet → creation form.
   if (!myFund && !editing) {
@@ -638,7 +627,17 @@ function MyFundTab(props: MyFundTabProps) {
               disabled={!uploadsOpen}
             />
           </div>
-          <fieldset disabled={!uploadsOpen}><FilePicker label="Pitch PDF" /></fieldset>
+          <fieldset disabled={!uploadsOpen}>
+            <label className="block text-slate-400 text-sm mb-1.5">Pitch PDF</label>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="application/pdf"
+              onChange={e => setFundFile(e.target.files?.[0] ?? null)}
+              className={fileInputCls}
+            />
+            {fundFile && <p className="text-slate-500 text-xs mt-1.5 truncate">Selected: {fundFile.name}</p>}
+          </fieldset>
           {error && (
             <p className="text-red-400 text-xs bg-red-500/10 border border-red-500/20 rounded-lg px-3 py-2">{error}</p>
           )}
@@ -671,7 +670,17 @@ function MyFundTab(props: MyFundTabProps) {
             <label className="block text-slate-400 text-sm mb-1.5">Description</label>
             <textarea value={fundDesc} onChange={e => setFundDesc(e.target.value)} rows={3} className={`${inputCls} resize-none`} />
           </div>
-          <FilePicker label="Replace PDF (optional)" />
+          <div>
+            <label className="block text-slate-400 text-sm mb-1.5">Replace PDF (optional)</label>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="application/pdf"
+              onChange={e => setFundFile(e.target.files?.[0] ?? null)}
+              className={fileInputCls}
+            />
+            {fundFile && <p className="text-slate-500 text-xs mt-1.5 truncate">Selected: {fundFile.name}</p>}
+          </div>
           {error && (
             <p className="text-red-400 text-xs bg-red-500/10 border border-red-500/20 rounded-lg px-3 py-2">{error}</p>
           )}
